@@ -35,8 +35,14 @@
       padding-right: 0px;
       padding-left: 0px;
     }
-
+    /*CARDS*/
+    #CARDS{
+      margin-top: 15px;
+    }
     /*dos columnas*/
+    #twocolumn{
+      margin-top: 25px;
+    }
     #columna1 {
       padding: 0px 2px 0px 0px
 
@@ -53,7 +59,13 @@
       color: white;
       background-color: #343a40;
     }
- 
+    /*Formulario*/
+    #formulario{
+      margin: 15px;
+    }
+    #textocomentario{
+      font-size: 10px;
+    }
     
   </style>
 </head>
@@ -123,7 +135,7 @@
 </section>
 
   <!-- Sección de 3 cards con imágenes y textos -->
-  <section class="container">
+  <section id="CARDS" class="container">
     <div class="row">
       <div class="col-md-12" style="text-align: center;">
         <p>Conoce a los</p>
@@ -177,24 +189,34 @@
   </section>
 
   <!-- Sección de formulario -->
-<section class="container">
+<section id="formulario" >
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h2>Formulario de contacto</h2>
+      <div class="col-md-12" style="text-align: center;">
+        <p>CONVIÉRTETE EN UN </p>
+        <h2>ORADOR</h2>
+      </div>
+      <span>
+        <p>Anótate como orador para dar una charla ignite. Cuéntanos de qué quieres hablar!</p>
+      </span>
       <form>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <!-- <label for="nombre">Nombre:</label> -->
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+          </div>
+          <div class="form-group col-md-6">
+            <!-- <label for="apellido">Apellido:</label> -->
+            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
+          </div>
+      </div>
         <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" class="form-control" id="nombre" name="nombre">
+          <!--lo comento para dejarlo por estructura pero agrego un placeholder para el escrito interno -->
+          <!-- <label for="comentario">Sobre que quieres hablar?</label>-->
+          <textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Sobre que quieres hablar?"></textarea>
+          <span id="textocomentario">Recuerda incluir un título para tu charla</span>
         </div>
-        <div class="form-group">
-          <label for="apellido">Apellido:</label>
-          <input type="text" class="form-control" id="apellido" name="apellido">
-        </div>
-        <div class="form-group">
-          <label for="comentario">Sobre que quieres hablar?</label>
-          <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn col-md-12" style="background-color: limegreen;">Enviar</button>
       </form>
     </div>
   </div>
