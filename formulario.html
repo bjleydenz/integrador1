@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Integrador</title>
-  <!--LINK DEL DEL BOOSTRAP -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-OgVRvuATP1z7JjHLkuOUzXw9oNtJcTKmki5YVnbeqnq4Wf5c5g5+qU5g631B5XW7" crossorigin="anonymous">
+  
   <!--LINK DEL CARRUSEL -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <style>
@@ -175,7 +174,7 @@
               </div>
               <div class="form-group col-md-6">
                 <select class="form-control" id="cantidad" name="cantidad">
-                  <option value="">Cantidad</option>
+                  <option value="0">Cantidad</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -183,7 +182,7 @@
               </div>
               <div class="form-group col-md-6">
                 <select class="form-control" id="categoria" name="categoria">
-                  <option value="">Categoria</option>
+                  <option value="100">Categoria</option>
                   <option value='20'>ESTUDIANTE</option>
                   <option value='50'>TRAINEE</option>
                   <option value='85'>JUNIOR</option>
@@ -192,10 +191,15 @@
             </div>
             <div class="row">
               <div class="form-group col-md-6"> 
-                <button type="submit" class="btn col-md-12" style="background-color: limegreen;" onclick="limpiarInformacion()">Borrar</button>
+                <button id="btnlimpiar" type="submit" class="btn col-md-12" style="background-color: limegreen;" onclick="limpiarInformacion()">Borrar</button>
               </div>
               <div class="form-group col-md-6"> 
-                <button type="submit" class="btn col-md-12" style="background-color: limegreen;" onclick="mostrarInformacion()">Resumen</button>
+                <button id="btnresumen" type="submit" class="btn col-md-12" style="background-color: limegreen;" onclick="mostrarInformacion()">Resumen</button>
+              </div>
+            </div>
+            <div id="mostrarprecio" class="row" style="display: none;" >
+              <div class="alert alert-success" role="alert">
+                <p><span id="valorCalculado"></span></p>
               </div>
             </div>
           </form>
@@ -230,39 +234,59 @@
 
 <!-- Scripts de Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-Nm2dtt8mJT+T9XoyZRJmHJ/e/8fWztTD6UQZ6YzN6Jv8xyUMNqg3qyCY+TEOf5I5" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZEoZpKEwqd8t6UGs7sF3q6" crossorigin="anonymous"></script>
-
 
 <!-- Scripts para el carrusel -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<!-- Scripts para el EL % de descuento -->
-  <script>
-    function mostrarInformacion() {
-    var selectCantidad = document.getElementById("cantidad");
-    var cantidadSeleccionada = parseInt(selectCantidad.value);
-    var selectCategoria = document.getElementById("categoria");
-    var categoriaSeleccionada =  parseInt(selectCategoria.value);
+<!-- Scripts Mostrar el precio -->
+<script>
+  function limpiarInformacion() {
+    console.log("LIMPIA INFO");
+    document.getElementById("cantidad") = "" ;
+    document.getElementById("categoria") = "";
+    document.getElementById("nombre") = "";
+    document.getElementById("apellido") = "";
+    document.getElementById("correo") = "";
+    return;
+  }
+</script>
+
+<script>
+  function mostrarInformacion() {
+    const selectCantidad = document.getElementById("cantidad");
+    const cantidadSeleccionada = parseInt(selectCantidad.value);
+    const selectCategoria = document.getElementById("categoria");
+    const categoriaSeleccionada = parseInt(selectCategoria.value);
+
+    if (cantidadSeleccionada !== "" && categoriaSeleccionada !== "") {
+      let monto = (200 * cantidadSeleccionada) * (categoriaSeleccionada / 100);
+      let mensaje = "EL Monto total a cobrar es: " + monto;
+      document.getElementById('valorCalculado').innerHTML = mensaje;
+      
+      var componente = document.getElementById("mostrarprecio");
+      componente.style.display = "inline"; // Muestra el componente
+    }
+
 
     
-    if (cantidadSeleccionada !== "" && categoriaSeleccionada !== "") {
-      var monto = (200 * cantidadSeleccionada) * (categoriaSeleccionada / 100);
-      var mensaje = "EL Monto total es: " + monto;
-      alert(mensaje);
-    }
-    return
   }
-   
+</script>
 
-  function limpiarInformacion() {
-      document.getElementById("cantidad") =  "" ;
-      document.getElementById("categoria") = "";
-      document.getElementById("nombre") = "";
-      document.getElementById("apellido") = "";
-      document.getElementById("correo") = "";
+<script>
+  window.addEventListener('click', function(event) {
+    var target = event.target;
+    if (target.tagName === 'BUTTON' && target.id === 'btnresumen') {
+      event.preventDefault();
     }
+  });
 
-  </script>
+  window.addEventListener('click', function(event) {
+    var target = event.target;
+    if (target.tagName === 'BUTTON' && target.id === 'btnlimpiar') {
+      window.location.reload();
+    }
+  });
+
+</script>
